@@ -2,6 +2,9 @@
 
 Explainifies ruby objects in the console, showing you the source structure and making your life a tiny bit easier.
 
+Default output shows the mixins and superclasses related to any object and what methods have been defined where.  
+Additionally the source of any method can been printed directly to the console.  
+
 ### Current Version 0.0.0 #
 
 You're currently looking at a placeholder project that contains this readme and little else.
