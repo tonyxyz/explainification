@@ -58,31 +58,39 @@ def fred.method_two
   puts "method two"
 end
 
-"fred".explainify
+
 
 m2 = fred.method(:method_two)
 puts "source method_two #{m2.source_location} -- #{m2.owner}"
 
 m1 = fred.method(:method_one)
-puts "source method_two #{m1.source_location} -- #{m1.owner}"
+puts "source method_one #{m1.source_location} -- #{m1.owner}"
+
+mw = fred.method(:woof)
+puts "source woof #{m1.source_location} -- #{m1.owner}"
+
 
 mu = fred.method(:upcase)
-puts "source upcase #{mu.source_location} -- #{mu.owner}"
+puts "source upcase #{mu.source_location} -- #{mu.owner}\n"
 
+puts mu.inspect
+
+
+puts "---- Singleton methods"
 fred.singleton_methods.each do |sm|
-  puts "singleton method #{sm.inspect}"
+  m = fred.method(sm)
+  puts "  %40s : %40s : %16s" % [sm, m.source_location, m.owner]
 end
-puts "all singleton methods - #{fred.singleton_methods.inspect}"
+puts "\n"
 
 klass = fred.class
-begin
-  puts "class is #{klass} -- #{klass.instance_methods(false)} !! #{klass.included_modules}"
-  klass = klass.superclass
-end while klass != nil
-  
+klass.included_modules.each do |imodule|
+  puts ".. #{imodule.inspect}"
+  imodule.instance_methods(false).each do |imethod|
+    m = fred.method imethod
+    puts "  %40s : %40s : %16s" % [ imethod, m.source_location, m.owner]
 
-puts fred.miaow
+  end
 
-
-
+end
 
